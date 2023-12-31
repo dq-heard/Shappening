@@ -118,7 +118,8 @@ h6,
     color: var(--primary);
 }
 
-.navbar-dark .navbar-nav .nav-link:hover {
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link:focus {
     color: var(--secondary);
 }
 
@@ -255,18 +256,159 @@ h6,
     height: calc(100% - 45px);
     top: 135px;
     left: 0;
-    background: linear-gradient(rgba(150, 117, 105, .9), rgba(150, 117, 105, .9)), url(../img/service.jpg) center center no-repeat;
+    background: linear-gradient(rgba(150, 117, 105, .8), rgba(150, 117, 105, .8)), url(../img/service.jpg) center center no-repeat;
     background-size: cover;
     z-index: -1;
 }
 
-.contact::after {
-    background: linear-gradient(rgba(150, 117, 105, .5), rgba(150, 117, 105, .5)), url(../img/bg.jpg) center center no-repeat;
+/* .contact::after {
+    background: linear-gradient(rgba(150, 117, 105, .5), rgba(150, 117, 105, .5)), url(../img/contact.jpg) center center no-repeat;
     background-size: cover;
+} */
+
+#menu .single-product {
+    margin-bottom: 2.2rem;
 }
 
-.bg-offer {
-    background: linear-gradient(rgba(150, 117, 105, .9), rgba(150, 117, 105, .9)), url(../img/offer.jpg) center center no-repeat;
+#menu .single-product .part-1 {
+    position: relative;
+    height: 420px;
+    max-height: 420px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+#menu .single-product .part-1::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    transition: all 0.3s;
+}
+
+/* #menu .single-product:hover .part-1::before {
+    transform: scale(1.2,1.2) rotate(5deg);
+} */
+
+#menu .single-product .part-1:hover .part-1-image-hover {
+    opacity: 1;
+}
+
+#menu .single-product .part-1-image-hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+#menu .single-product .part-1 .best-seller,
+#menu .single-product .part-1 .new {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    color: #ffffff;
+    background-color: var(--primary);
+    padding: 2px 8px;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+#menu .single-product .part-1 .new {
+    left: 0;
+    background-color: #444444;
+}
+
+/* #menu .single-product .part-1 ul {
+    position: absolute;
+    bottom: -41px;
+    left: 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    opacity: 0;
+    transition: bottom 0.5s, opacity 0.5s;
+}
+
+#menu .single-product:hover .part-1 ul {
+    bottom: 30px;
+    opacity: 1;
+}
+
+#menu .single-product .part-1 ul li {
+    display: inline-block;
+    margin-right: 4px;
+}
+
+#menu .single-product .part-1 ul li a {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    background-color: #ffffff;
+    color: #444444;
+    text-align: center;
+    box-shadow: 0 2px 20px rgb(50 50 50 / 10%);
+    transition: color 0.2s;
+}
+
+#menu .single-product .part-1 ul li a:hover {
+    color: #fe302f;
+} */
+
+#menu .single-product .part-1:hover .view-more {
+    opacity: 1;
+}
+
+#menu .single-product .view-more {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(150, 117, 105);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    opacity: 0;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+#menu .single-product .part-2 .product-title {
+    font-size: 1rem;
+}
+
+#menu .single-product .part-2 h4 {
+    display: inline-block;
+    font-size: 1rem;
+}
+
+#menu .single-product .part-2 .product-old-price {
+    position: relative;
+    padding: 0 7px;
+    margin-right: 2px;
+    opacity: 0.6;
+}
+
+#menu .single-product .part-2 .product-old-price::after {
+    position: absolute;
+    content: "";
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #444444;
+    transform: translateY(-50%);
+}
+
+.bg-gift {
+    background: linear-gradient(rgba(150, 117, 105, .6), rgba(150, 117, 105, .6)), url(../img/gift.jpg) center center no-repeat;
     background-size: cover;
 }
 
@@ -321,6 +463,6 @@ h6,
 }
 
 .bg-img {
-    background: linear-gradient(rgba(150, 117, 105, .5), rgba(150, 117, 105, .5)), url(../img/bg.jpg) center center no-repeat;
+    background: linear-gradient(rgba(150, 117, 105, .7), rgba(150, 117, 105, .7)), url(../img/bg.jpg) center center no-repeat;
     background-size: cover;
 }
