@@ -422,6 +422,10 @@ figure {
 	.list-group-horizontal-lg > .list-group-item:last-child {
 		border-top-right-radius: 0;
 	}
+
+	.navbar-expand-lg {
+		margin-top: -0.1rem;
+	}
 }
 
 @media (min-width: 1200px) {
