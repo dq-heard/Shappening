@@ -27,75 +27,17 @@
         $(window).resize(toggleNavbarMethod);
     });
 
-
-    // Modal Video
-    $(document).ready(function () {
-        var $videoSrc;
-        $('.btn-play').click(function () {
-            $videoSrc = $(this).data("src");
-        });
-        console.log($videoSrc);
-
-        $('#videoModal').on('shown.bs.modal', function (e) {
-            $("#video").attr('src', $videoSrc + "?autoplay=1&amp;modestbranding=1&amp;showinfo=0");
-        })
-
-        $('#videoModal').on('hide.bs.modal', function (e) {
-            $("#video").attr('src', $videoSrc);
-        })
-    });
-    
-    
-    // // Back to top button
-    // $(window).scroll(function () {
-    //     if ($(this).scrollTop() > 100) {
-    //         $('.back-to-top').fadeIn('slow');
-    //     } else {
-    //         $('.back-to-top').fadeOut('slow');
-    //     }
-    // });
-    // $('.back-to-top').click(function () {
-    //     $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
-    //     return false;
-    // });
-
-
     // Facts counter
     $('[data-toggle="counter-up"]').counterUp({
         delay: 10,
         time: 2000
-    });
-
-
-    // Testimonials carousel
-    $(".testimonial-carousel").owlCarousel({
-        autoplay: true,
-        smartSpeed: 1500,
-        margin: 45,
-        dots: true,
-        loop: true,
-        center: true,
-        responsive: {
-            0:{
-                items:1
-            },
-            576:{
-                items:1
-            },
-            768:{
-                items:2
-            },
-            992:{
-                items:3
-            }
-        }
     });
     
 })(jQuery);
 
 // Get the container element & create an array of section names
 const navbarCollapse = document.getElementById("navbarCollapse");
-const sectionTitles = ["Home", "About", "Shop", "Origins", "More", "Contact"];
+const sectionTitles = ["Home", "About", "Shop", "Connect", "E-Gifts", "Policies"];
 
 // Select the child element of navbarCollapse
 const nav = navbarCollapse.querySelector("nav");
@@ -107,41 +49,24 @@ sectionTitles.forEach(section => {
 
   if (section === "Home") {
     a.href = `#top`;
-  } else if (section === "More") {
-    a.href = "#";
-    a.classList.add("nav-link","dropdown-toggle");
-    a.setAttribute("data-bs-toggle", "dropdown");
-    const dropdown = document.createElement("div");
-    dropdown.classList.add("dropdown-menu", "m-0");
-    
+    a.classList.add("nav-link", "nav-item");
+    nav.appendChild(a);
 
-    const dropdownLinks = ["Service", "Gift Card"];
-
-    dropdownLinks.forEach((link) => {
-      const dropdownLink = document.createElement("a");
-      dropdownLink.href = `#${link.toLowerCase()}`;
-      dropdownLink.classList.add("dropdown-item");
-      dropdownLink.textContent = link;
-      dropdown.appendChild(dropdownLink);
-    });
-
-    const dropdownWrapper = document.createElement("div");
-    dropdownWrapper.classList.add("nav-item", "dropdown");
-    dropdownWrapper.appendChild(a);
-    dropdownWrapper.appendChild(dropdown);
-
-    nav.appendChild(dropdownWrapper);
   } else {
     a.href = `#${section.toLowerCase()}`;
+    a.classList.add("nav-link", "nav-item");
+    nav.appendChild(a);
   }
-
-  a.classList.add("nav-link", "nav-item");
-  nav.appendChild(a);
 });
 
 // Get all nav-links & set "Home" as default active link
 const links = nav.getElementsByClassName("nav-link");
-const active = nav.getElementsByClassName("active");
+let active = nav.getElementsByClassName("active");
+
+if (active.length === 0) {
+  links[0].classList.add("active");
+  active = nav.getElementsByClassName("active");
+}
 
 // Loop through the links and add active class on click
 for (let i = 0; i < links.length; i++) {
@@ -183,6 +108,37 @@ window.addEventListener("scroll", () => {
   }
 });
 
+/* HERO */
+// Modal Video
+let videoSrc;
+const btnPlay = document.querySelectorAll(".btn-play");
+const videoModal = document.getElementById("videoModal");
+const video = document.getElementById("video");
+
+const modalClose = videoModal.querySelector(".btn-close");
+
+document.addEventListener("DOMContentLoaded", function () {
+  for (let i = 0; i < btnPlay.length; i++) {
+    btnPlay[i].addEventListener("click", function () {
+      videoSrc = this.getAttribute("data-src");
+    });
+  }
+
+  videoModal.addEventListener("shown.bs.modal", function (e) {
+    video.setAttribute(
+      "src",
+      videoSrc + "?autoplay=1&modestbranding=1&showinfo=0"
+    );
+  });
+
+  videoModal.addEventListener("hidden.bs.modal", function (e) {
+    video.setAttribute(
+      "src",""
+    );
+  });
+});
+
+/* SHOP */
 // Create an array of menu items
 const menu = [
   {
@@ -472,7 +428,101 @@ function displayMenuButtons(menuFiltered, currentCategory) {
   });  
 }
 
-// Setup back-to-top link
+/* GIFT CARD */
+const gift = document.getElementById("e-gifts");
+
+// Select all the buttons in the .btn-group div
+const buttons = gift.querySelectorAll(".amount input");
+
+// Select the h1 element
+const h1 = gift.querySelector("h1");
+
+// Add a click event listener to each button
+buttons.forEach((button) => {
+  button.addEventListener("click", () => {
+    // Insert the value of the clicked button into the h1 element
+    h1.textContent = button.value;
+  });
+});
+
+// Add a click event listener to each button
+buttons.forEach((button) => {
+  button.addEventListener("click", () => {
+    // Remove the active class from all buttons
+    buttons.forEach((btn) => {
+      btn.classList.remove("active");
+    });
+
+    // Add the active class to the clicked button
+    button.classList.add("active");
+  });
+});
+
+let quantity = 1;
+const input = document.querySelector("input[placeholder='1']");
+const minusButton = document.getElementById("minus");
+const plusButton = document.getElementById("plus");
+
+minusButton.addEventListener("click", () => {
+  if (quantity > 1) {
+    quantity--;
+    input.placeholder = quantity;
+  }
+});
+
+plusButton.addEventListener("click", () => {
+  quantity++;
+  input.placeholder = quantity;
+});
+
+// Get the For Myself and For Someone Else button elements
+const forMyselfButton = document.querySelector("input[value='For Myself']");
+const forSomeoneElseButton = document.querySelector("input[value='For Someone Else']");
+
+// Get the Date, Recipient e-Mail, Name, and Message fields
+const dateField = document.getElementById("date");
+const recipientEmailField = document.getElementById("email");
+const recipientNameField = document.getElementById("name");
+const messageField = document.getElementById("message");
+const submitButton = document.getElementById("submit");
+
+// Add a click event listener to the For Myself button
+forMyselfButton.addEventListener("click", () => {
+  // Hide the respective fields
+  dateField.style.display = "none";
+  recipientEmailField.style.display = "none";
+  recipientNameField.style.display = "none";
+  messageField.style.display = "none";
+
+  // Remove the active class from the For Someone Else button
+  forSomeoneElseButton.classList.remove("active");
+
+  // Toggle the active class on the For Myself button
+  forMyselfButton.classList.toggle("active");
+
+  // Position change for Submit Button
+  submitButton.style.marginTop = "-11rem";
+});
+
+// Add a click event listener to the For Someone Else button
+forSomeoneElseButton.addEventListener("click", () => {
+  // Show the respective fields
+  dateField.style.display = "block";
+  recipientEmailField.style.display = "block";
+  recipientNameField.style.display = "block";
+  messageField.style.display = "block";
+
+  // Remove the active class from the For Myself button
+  forMyselfButton.classList.remove("active");
+
+  // Toggle the active class on the For Someone Else button
+  forSomeoneElseButton.classList.toggle("active");
+
+  // Position reset for Submit Button
+  submitButton.style.marginTop = "0";
+});
+
+/* BACK TO TOP */
 const topLink = document.querySelector(".back-to-top");
 
 window.onscroll = () => {
