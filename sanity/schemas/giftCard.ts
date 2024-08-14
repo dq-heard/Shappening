@@ -10,13 +10,6 @@ export default {
       options: {
         hotspot: true,
       },
-      fields: [
-        {
-          name: "asset",
-          type: "reference",
-          to: [{ type: "sanity.imageAsset" }], // Ensure this matches your setup
-        },
-      ],
     },
   ],
 };
