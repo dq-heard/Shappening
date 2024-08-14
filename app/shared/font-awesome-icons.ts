@@ -1,0 +1,45 @@
+import {
+  BiEnvelopeOpen,
+  BiGlobe,
+  BiPhone,
+  BiRightArrowAlt,
+} from "react-icons/bi";
+import {
+  FaArrowLeftLong,
+  FaArrowRightLong,
+  FaArrowUp,
+  FaFacebookF,
+  FaGift,
+  FaHandHoldingHeart,
+  FaInstagram,
+  FaLocationDot,
+  FaPalette,
+  FaRegHeart,
+  FaRegEnvelope,
+  FaRegTrashCan,
+  FaRegUser,
+  FaStar,
+} from "react-icons/fa6";
+import { FiShoppingBag } from "react-icons/fi";
+
+export {
+  BiEnvelopeOpen,
+  BiGlobe,
+  BiPhone,
+  BiRightArrowAlt,
+  FaArrowLeftLong,
+  FaArrowRightLong,
+  FaArrowUp,
+  FaFacebookF,
+  FaGift,
+  FaHandHoldingHeart,
+  FaInstagram,
+  FaLocationDot,
+  FaPalette,
+  FaRegHeart,
+  FaRegEnvelope,
+  FaRegTrashCan,
+  FaRegUser,
+  FaStar,
+  FiShoppingBag,
+};
