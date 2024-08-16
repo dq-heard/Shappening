@@ -122,13 +122,14 @@ section .container {
   padding: 20px 15px;
 }
 
-.navbar-dark .navbar-nav .nav-link.active {
+/* .navbar-dark .navbar-nav .nav-link.active {
   color: #ffb2aa;
-}
+} */
 
 .navbar-dark .navbar-nav .nav-link:hover,
 .navbar-dark .navbar-nav .nav-link:focus {
   color: #ffcbc5;
+  text-decoration: underline;
 }
 
 @media (max-width: 991.98px) {

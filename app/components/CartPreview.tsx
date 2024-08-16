@@ -24,60 +24,62 @@ const CartPreview: React.FC<CartPreviewProps> = ({ onClose }) => {
 
   useEffect(() => {
     const preloadImages = async () => {
-      const imagePromises = cartItems.map(async (product) => {
-        let urls: string[] = [];
+      if (typeof window !== "undefined") {
+        const imagePromises = cartItems.map(async (product) => {
+          let urls: string[] = [];
 
-        // Ensure product.images is defined
-        if (!product.images) {
-          console.error(`Product ${product._id} has no images`);
-          return { productId: product._id, urls };
-        }
+          // Ensure product.images is defined
+          if (!product.images) {
+            console.error(`Product ${product._id} has no images`);
+            return { productId: product._id, urls };
+          }
 
-        // Normalize images into an array
-        const imagesArray = Array.isArray(product.images)
-          ? product.images
-          : [product.images];
+          // Normalize images into an array
+          const imagesArray = Array.isArray(product.images)
+            ? product.images
+            : [product.images];
 
-        urls = await Promise.all(
-          imagesArray.map(async (image) => {
-            if (typeof image === "string") {
-              // Handle if image is already a string URL
-              return image;
-            }
-
-            // Handle if image is of type ImageAsset
-            if ("asset" in image) {
-              try {
-                const img = new window.Image();
-                img.src = urlFor(image.asset).url() || "";
-                return new Promise<string>((resolve, reject) => {
-                  img.onload = () => resolve(img.src);
-                  img.onerror = () => reject("Image load error");
-                });
-              } catch (error) {
-                console.error(`Failed to preload image: ${error}`);
-                return ""; // Fallback to empty string on error
+          urls = await Promise.all(
+            imagesArray.map(async (image) => {
+              if (typeof image === "string") {
+                // Handle if image is already a string URL
+                return image;
               }
-            }
 
-            // If image type is unknown, fallback
-            return "";
-          })
+              // Handle if image is of type ImageAsset
+              if ("asset" in image) {
+                try {
+                  const img = new window.Image();
+                  img.src = urlFor(image.asset).url() || "";
+                  return new Promise<string>((resolve, reject) => {
+                    img.onload = () => resolve(img.src);
+                    img.onerror = () => reject("Image load error");
+                  });
+                } catch (error) {
+                  console.error(`Failed to preload image: ${error}`);
+                  return ""; // Fallback to empty string on error
+                }
+              }
+
+              // If image type is unknown, fallback
+              return "";
+            })
+          );
+
+          return { productId: product._id, urls };
+        });
+
+        const imageResults = await Promise.all(imagePromises);
+        const imageMap = imageResults.reduce(
+          (acc, { productId, urls }) => {
+            acc[productId] = urls;
+            return acc;
+          },
+          {} as { [key: string]: string[] }
         );
 
-        return { productId: product._id, urls };
-      });
-
-      const imageResults = await Promise.all(imagePromises);
-      const imageMap = imageResults.reduce(
-        (acc, { productId, urls }) => {
-          acc[productId] = urls;
-          return acc;
-        },
-        {} as { [key: string]: string[] }
-      );
-
-      setLoadedImages(imageMap);
+        setLoadedImages(imageMap);
+      }
     };
 
     preloadImages();

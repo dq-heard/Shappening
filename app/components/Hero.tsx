@@ -34,7 +34,7 @@ const Hero: React.FC = () => {
               <button
                 type="button"
                 className="btn-play"
-                onClick={() => handlePlayClick("/about.mp4")} // Example video source
+                onClick={() => handlePlayClick("/about.mp4")}
               >
                 <span></span>
               </button>
@@ -46,9 +46,11 @@ const Hero: React.FC = () => {
         </div>
       </div>
 
-      {showModal && (
-        <VideoModal videoSrc={videoSrc} onClose={() => setShowModal(false)} />
-      )}
+      <VideoModal
+        videoSrc={videoSrc}
+        show={showModal}
+        onClose={() => setShowModal(false)}
+      />
     </section>
   );
 };

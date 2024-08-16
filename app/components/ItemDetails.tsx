@@ -1,7 +1,7 @@
-import { useContext, useEffect, useState, useRef } from "react";
+import { useContext, useEffect, useState } from "react";
 import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
-import { Carousel } from "bootstrap";
+import { Carousel } from "react-bootstrap";
 import { Product, CartItem } from "../shared/types";
 import { CartContext } from "../context/CartContext";
 
@@ -13,7 +13,6 @@ const ItemDetails: React.FC<Props> = ({ product }) => {
   const [index, setIndex] = useState(0);
   const [loadedImages, setLoadedImages] = useState<string[]>([]);
   const cartContext = useContext(CartContext);
-  const carouselRef = useRef<HTMLDivElement>(null);
 
   const {
     qty = 1,
@@ -23,19 +22,6 @@ const ItemDetails: React.FC<Props> = ({ product }) => {
     cartItems = [],
     addItem = (item: CartItem, quantity: number) => {},
   } = cartContext || {};
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      import("bootstrap").then(() => {
-        if (carouselRef.current) {
-          new Carousel(carouselRef.current, {
-            interval: 3000,
-            ride: "carousel",
-          });
-        }
-      });
-    }
-  }, []);
 
   useEffect(() => {
     const preloadImages = async () => {
@@ -88,63 +74,26 @@ const ItemDetails: React.FC<Props> = ({ product }) => {
     <div className="container py-5 mx-auto">
       <div className="row">
         <div className="col-lg-7 col-xl-8">
-          <div
-            id="productCarousel"
-            className="carousel slide"
-            data-bs-ride="carousel"
-            ref={carouselRef}
+          <Carousel
+            interval={3000} // Adjust the interval time if needed
+            activeIndex={index}
+            onSelect={(selectedIndex) => setIndex(selectedIndex)}
           >
-            <div className="carousel-inner">
-              {loadedImages.length > 0 &&
-                loadedImages.map((imageUrl, idx) => (
-                  <div
-                    key={idx}
-                    className={`carousel-item ${idx === index ? "active" : ""}`}
-                  >
-                    <Image
-                      loader={() => imageUrl}
-                      src={imageUrl}
-                      alt={`Product image ${idx}`}
-                      width={480}
-                      height={480}
-                      className="object-cover mx-auto"
-                    />
-                  </div>
-                ))}
-            </div>
-            <button
-              className="carousel-control-prev"
-              type="button"
-              data-bs-target="#productCarousel"
-              data-bs-slide="prev"
-              onClick={() =>
-                setIndex(
-                  (prevIndex) =>
-                    (prevIndex - 1 + product.images.length) %
-                    product.images.length
-                )
-              }
-            >
-              <span
-                className="carousel-control-prev-icon"
-                aria-hidden="true"
-              ></span>
-            </button>
-            <button
-              className="carousel-control-next"
-              type="button"
-              data-bs-target="#productCarousel"
-              data-bs-slide="next"
-              onClick={() =>
-                setIndex((prevIndex) => (prevIndex + 1) % product.images.length)
-              }
-            >
-              <span
-                className="carousel-control-next-icon"
-                aria-hidden="true"
-              ></span>
-            </button>
-          </div>
+            {loadedImages.length > 0 &&
+              loadedImages.map((imageUrl, idx) => (
+                <Carousel.Item key={idx}>
+                  <Image
+                    loader={() => imageUrl}
+                    src={imageUrl}
+                    alt={`Product image ${idx}`}
+                    width={480}
+                    height={480}
+                    className="d-block w-100"
+                    layout="responsive"
+                  />
+                </Carousel.Item>
+              ))}
+          </Carousel>
         </div>
         <div className="col-lg-5 pt-3 pt-lg-0 col-xl-4">
           <h2>{product.name}</h2>

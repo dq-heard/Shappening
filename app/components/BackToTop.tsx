@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
-
 import { FaArrowUp } from "../shared/font-awesome-icons";
 
 const BackToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   const checkScrollTop = () => {
-    if (window.scrollY > 100) {
+    if (typeof window !== "undefined" && window.scrollY > 100) {
       setIsVisible(true);
     } else {
       setIsVisible(false);
@@ -15,18 +14,23 @@ const BackToTop = () => {
 
   const scrollToTop = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    if (typeof window !== "undefined") {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", checkScrollTop);
-    return () => window.removeEventListener("scroll", checkScrollTop);
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", checkScrollTop);
+      return () => window.removeEventListener("scroll", checkScrollTop);
+    }
   }, []);
 
   return (
+    typeof window !== "undefined" &&
     isVisible && (
       <a
         href="#"

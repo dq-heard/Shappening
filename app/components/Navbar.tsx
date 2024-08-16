@@ -1,14 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import Link from "next/link";
+import { Navbar, Nav } from "react-bootstrap";
 import { UserCartMenu } from "../components";
 
-const Navbar = () => {
+const NavbarComponent: React.FC = () => {
   const [sticky, setSticky] = useState(false);
   const sectionsRef = useRef<HTMLElement[]>([]);
-
-  useEffect(() => {
-    import("bootstrap");
-  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,60 +43,54 @@ const Navbar = () => {
     }
   };
 
+  const handleScrollSpy = () => {
+    let current = "";
+    sectionsRef.current.forEach((section) => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= 90 && rect.bottom >= window.innerHeight / 5) {
+        current = section.id;
+      }
+    });
+  };
+
   useEffect(() => {
-    const handleScroll = () => {
-      let current = "";
-      sectionsRef.current.forEach((section) => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top <= 90 && rect.bottom >= window.innerHeight / 5) {
-          current = section.id;
-        }
-      });
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    window.addEventListener("scroll", handleScrollSpy);
+    return () => window.removeEventListener("scroll", handleScrollSpy);
   }, []);
 
   return (
-    <section
-      className={`navbar navbar-expand-lg bg-dark navbar-dark shadow-sm py-3 px-3 p-lg-0 ${sticky ? "sticky-top" : ""}`}
-      id="nav"
+    <Navbar
+      bg="dark"
+      variant="dark"
+      expand="lg"
+      sticky={sticky ? "top" : undefined}
+      className="shadow-sm py-3 px-3 p-lg-0"
     >
-      <Link href="/" className="navbar-brand d-block d-lg-none">
+      <Navbar.Brand href="/" className="d-block d-lg-none">
         <h1 className="m-0 font-primary text-white">#Shappening</h1>
-      </Link>
-      <button
-        className="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarCollapse"
-      >
+      </Navbar.Brand>
+      <Navbar.Toggle aria-controls="navbarCollapse">
         <span className="navbar-toggler-icon"></span>
-      </button>
-      <div className="collapse navbar-collapse" id="navbarCollapse">
-        <nav className="navbar-nav ms-auto mx-lg-auto py-0">
+      </Navbar.Toggle>
+      <Navbar.Collapse id="navbarCollapse">
+        <Nav className="ms-auto mx-lg-auto py-0">
           <div className="d-flex text-center text-white py-4 border-white border-bottom d-lg-none">
             <UserCartMenu />
           </div>
           {sectionTitles.map((section, index) => (
-            <li key={index}>
-              <Link
+            <Nav.Item key={index}>
+              <Nav.Link
                 href={`#${section.toLowerCase()}`}
-                className="nav-link nav-item"
                 onClick={() => handleNavClick(section)}
               >
                 {section}
-              </Link>
-            </li>
+              </Nav.Link>
+            </Nav.Item>
           ))}
-        </nav>
-      </div>
-    </section>
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
   );
 };
 
-export default Navbar;
+export default NavbarComponent;
