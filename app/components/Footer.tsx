@@ -65,19 +65,18 @@ const Footer = () => {
                       className="btn btn-lg btn-primary btn-lg-square border-inner rounded-0 me-2"
                       href="https://www.facebook.com/profile.php?id=100075080243008"
                     >
-                      <FaFacebookF className="pe-1" />
+                      <FaFacebookF className="ps-1" />
                     </a>
                     <a
                       className="btn btn-lg btn-primary btn-lg-square border-inner rounded-0 me-2"
                       href="https://www.instagram.com/shappening_art/"
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
                     >
-                      <FaInstagram
-                        style={{
-                          paddingRight: ".5rem",
-                          width: "25px",
-                          height: "25px",
-                        }}
-                      />
+                      <FaInstagram />
                     </a>
                   </div>
                 </div>

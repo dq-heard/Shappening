@@ -58,17 +58,16 @@ const Shop: React.FC = () => {
           <h1 className="display-4 text-uppercase">Order Yours Now!</h1>
         </div>
         <div className="tab-class text-center">
-          <ul className="nav nav-pills d-inline-flex justify-content-center bg-dark text-uppercase border-inner p-4 mb-5">
+          <ul className="nav nav-pills d-inline-flex justify-content-center bg-dark border-inner p-4 mb-5">
             {categories.map((category) => (
               <li key={category} className="nav-item">
-                <Link
-                  className={`nav-link text-white ${currentCategory === category ? "active" : ""}`}
+                <button
+                  className={`nav-link text-white text-uppercase ${currentCategory === category ? "active" : ""}`}
                   data-bs-toggle="pill"
-                  href="#"
                   onClick={() => handleCategoryClick(category)}
                 >
                   {category}
-                </Link>
+                </button>
               </li>
             ))}
           </ul>

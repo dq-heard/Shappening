@@ -57,24 +57,23 @@ const Connect = () => {
               <div className="position-relative overflow-hidden">
                 <img className="img-fluid w-100" src={"/founder.webp"} alt="" />
                 <div className="team-overlay w-100 h-100 position-absolute top-50 start-50 translate-middle d-flex align-items-center justify-content-center">
-                  <div className="d-flex align-items-center justify-content-start">
+                  <div className="d-flex mt-4">
                     <a
                       className="btn btn-lg btn-primary btn-lg-square border-inner rounded-0 me-2"
                       href="https://www.facebook.com/profile.php?id=100075080243008"
                     >
-                      <FaFacebookF className="pe-1" />
+                      <FaFacebookF className="ps-1" />
                     </a>
                     <a
                       className="btn btn-lg btn-primary btn-lg-square border-inner rounded-0 me-2"
                       href="https://www.instagram.com/shappening_art/"
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
                     >
-                      <FaInstagram
-                        style={{
-                          paddingRight: ".5rem",
-                          width: "25px",
-                          height: "25px",
-                        }}
-                      />
+                      <FaInstagram />
                     </a>
                   </div>
                 </div>
