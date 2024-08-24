@@ -82,15 +82,22 @@ const ItemDetails: React.FC<Props> = ({ product }) => {
             {loadedImages.length > 0 &&
               loadedImages.map((imageUrl, idx) => (
                 <Carousel.Item key={idx}>
-                  <Image
-                    loader={() => imageUrl}
-                    src={imageUrl}
-                    alt={`Product image ${idx}`}
-                    width={480}
-                    height={480}
-                    className="d-block w-100"
-                    layout="responsive"
-                  />
+                  <div
+                    style={{
+                      position: "relative",
+                      width: "100%",
+                      height: "480px", // Adjust to the desired height
+                    }}
+                  >
+                    <Image
+                      loader={() => imageUrl}
+                      src={imageUrl}
+                      alt={`Product image ${idx}`}
+                      layout="fill" // Make the image fill its parent container
+                      objectFit="cover" // Cover the container while maintaining aspect ratio
+                      className="d-block w-100"
+                    />
+                  </div>
                 </Carousel.Item>
               ))}
           </Carousel>

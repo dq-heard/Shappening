@@ -180,7 +180,7 @@ const Footer = () => {
             . All Rights Reserved. Created by{" "}
             <a
               className="text-white border-bottom"
-              href="https://dq-heard.github.io/Portfolio/"
+              href="https://dq-heard.vercel.app/"
             >
               D. Heard
             </a>{" "}
